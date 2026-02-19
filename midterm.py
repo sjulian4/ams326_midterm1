@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt # need to install matplotlib
 
 # (1) Piecewise linear interpolation of the 12 monthly averages.
 # todo: check if the t_Values are actually representative of the 16th of every month
-t_values = np.array([16,47,63,79,95,111,127,143, 159, 175, 191,207]) # the middle of each month, todo fix this data
+t_values = np.array([16, 47, 78, 109, 140, 171, 202, 233, 264, 295, 326, 357]) # the middle of each month, todo fix this data
 temps_high = np.array([40,41,48,60,69,77,83,82,75,64,54,45]) # the 'y' value, and rightmost matrix on the page 6 of topic 2 notes
 temps_average = np.array([33,34,40,51,60,69,75,74,67,56,47,38])
 temps_low = np.array([26,26,32,42,51,61,67,66,60,49,39,31])
@@ -73,7 +73,7 @@ def P_9(t, data):
         coefficient = 1
         for j in range(9):
             if j != i:
-                coefficient *= (t - t_values[j]) / (t_values[i] - t_values[j])
+                coefficient *= (t - days[j]) / (days[i] - days[j])
         func += data[i] * coefficient
     return func
 
