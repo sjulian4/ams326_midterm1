@@ -106,9 +106,9 @@ for i in range(4):
 
 def P_4(t, data):
     func = 0.0
-    for i in range(temps_high.size):
+    for i in range(4):
         coefficient = 1
-        for j in range(temps_high.size):
+        for j in range(4):
             if j != i:
                 coefficient *= (t - days[j]) / (days[i] - days[j])
         func += data[i] * coefficient
