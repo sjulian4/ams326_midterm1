@@ -93,24 +93,11 @@ print("Low value Dec 25: " + str(P_9(366, low_values)))
 
 # (3) Direct 4th-order polynomial fit to the 12 monthly averages.
 
-days = []
-high_values = []
-average_values = []
-low_values = []
-interval = np.floor(total_days / 4) # 4 intervals
-
-for i in range(4):
-    days.append(i*interval + 1)
-    high_values.append(piecewise_linear(i*interval + 1, t_values, temps_high))
-    average_values.append(piecewise_linear(i*interval + 1, t_values, temps_average))
-    low_values.append(piecewise_linear(i*interval + 1, t_values, temps_low))
-
-
 
 
 
 X = np.column_stack([t_values**0, t_values**1, t_values**2, t_values**3, t_values**4])
-X = np.zeros((12, 4))
+X = np.zeros((12, 5))
 
 #establish the matrix
 for i in range(X.shape[0]):
@@ -123,7 +110,7 @@ coeffs_average = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)),
 coeffs_low = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_low)
 
 def P_4_fit(t, coeffs):
-    return coeffs[0] + coeffs[1]*t + coeffs[2]*(t**2) + coeffs[3]*(t**3) 
+    return coeffs[0] + coeffs[1]*t + coeffs[2]*(t**2) + coeffs[3]*(t**3) + coeffs[4]*(t**4) 
 print("Part 3:")
 print("High value Feb 19: " + str(P_4_fit(50, coeffs_high)))
 print("Average value Feb 19: " + str(P_4_fit(50, coeffs_average)))
