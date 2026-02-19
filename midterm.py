@@ -103,7 +103,7 @@ X = np.zeros((12, 5))
 for i in range(X.shape[0]):
     for j in range(X.shape[1]):
         X[i,j] += t_values[i] ** j
-# Each row becomes [1, t, t^2, t^3]
+# Each row becomes [1, t, t^2, t^3, t^4]
 
 coeffs_high = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_high)
 coeffs_average = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_average)
