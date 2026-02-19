@@ -92,46 +92,38 @@ print("Low value Dec 25: " + str(P_9(366, low_values)))
 
 # (3) Direct 4th-order polynomial fit to the 12 monthly averages.
 
-def T_12_high(t):
+days = []
+high_values = []
+average_values = []
+low_values = []
+interval = np.floor(total_days / 4) # 4 intervals
+
+for i in range(4):
+    days.append(i*interval + 1)
+    high_values.append(piecewise_linear(i*interval + 1, t_values, temps_high))
+    average_values.append(piecewise_linear(i*interval + 1, t_values, temps_average))
+    low_values.append(piecewise_linear(i*interval + 1, t_values, temps_low))
+
+def P_4(t, data):
     func = 0.0
     for i in range(temps_high.size):
         coefficient = 1
         for j in range(temps_high.size):
             if j != i:
-                coefficient *= (t - t_values[j]) / (t_values[i] - t_values[j])
-        func += temps_high[i] * coefficient
-    return func
-
-def T_12_average(t):
-    func = 0.0
-    for i in range(temps_average.size):
-        coefficient = 1
-        for j in range(temps_average.size):
-            if j != i:
-                coefficient *= (t - t_values[j]) / (t_values[i] - t_values[j])
-        func += temps_average[i] * coefficient
-    return func
-
-def T_12_low(t):
-    func = 0.0
-    for i in range(temps_low.size):
-        coefficient = 1
-        for j in range(temps_low.size):
-            if j != i:
-                coefficient *= (t - t_values[j]) / (t_values[i] - t_values[j])
-        func += temps_low[i] * coefficient
+                coefficient *= (t - days[j]) / (days[i] - days[j])
+        func += data[i] * coefficient
     return func
 
 
 
-print("High value Feb 19: " + str(T_12_high(50)))
-print("Average value Feb 19: " + str(T_12_average(50)))
-print("Low value Feb 19: " + str(T_12_low(50)))
+print("High value Feb 19: " + str(P_4(50, temps_high)))
+print("Average value Feb 19: " + str(P_4(50,temps_average)))
+print("Low value Feb 19: " + str(P_4(50,temps_low)))
 
-print("High value July 4: " + str(T_12_high(190)))
-print("Average value July 4: " + str(T_12_average(190)))
-print("Low value July 4: " + str(T_12_low(190)))
+print("High value July 4: " + str(P_4(190,temps_high)))
+print("Average value July 4: " + str(P_4(190,temps_average)))
+print("Low value July 4: " + str(P_4(190,temps_low)))
 
-print("High value Dec 25: " + str(T_12_high(366)))
-print("Average value Dec 25: " + str(T_12_average(366)))
-print("Low value Dec 25: " + str(T_12_low(366)))
+print("High value Dec 25: " + str(P_4(366,temps_high)))
+print("Average value Dec 25: " + str(P_4(366,temps_average)))
+print("Low value Dec 25: " + str(P_4(366,temps_low)))
