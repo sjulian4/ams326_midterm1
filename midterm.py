@@ -110,7 +110,7 @@ for i in range(4):
 
 
 X = np.column_stack([t_values**0, t_values**1, t_values**2, t_values**3, t_values**4])
-X = np.zeros((high_values.size, 4))
+X = np.zeros((12, 4))
 
 #establish the matrix
 for i in range(X.shape[0]):
@@ -123,7 +123,7 @@ coeffs_average = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)),
 coeffs_low = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_low)
 
 def P_4_fit(t, coeffs):
-    return coeffs[0] + coeffs[1]*t + coeffs[2]*(t**2) + coeffs[3]*(t**3) + coeffs[4]*(t**4)
+    return coeffs[0] + coeffs[1]*t + coeffs[2]*(t**2) + coeffs[3]*(t**3) 
 print("Part 3:")
 print("High value Feb 19: " + str(P_4_fit(50, coeffs_high)))
 print("Average value Feb 19: " + str(P_4_fit(50, coeffs_average)))
