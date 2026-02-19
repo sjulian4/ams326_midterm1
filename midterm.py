@@ -50,9 +50,9 @@ print("Low value Dec 25: " + str(piecewise_linear(366, t_values, temps_low)))
 
 # (2) Polynomial interpolation through 9 evenly spaced points over the year using results in (1).
 
-total_days = 31 * 13
+total_days = 31 * 12
 
-interval = np.floor(total_days / 9) # every 44 days
+interval = np.floor(total_days / 9) # every interval days
 
 days = []
 high_values = []
