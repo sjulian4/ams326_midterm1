@@ -105,27 +105,34 @@ for i in range(4):
     average_values.append(piecewise_linear(i*interval + 1, t_values, temps_average))
     low_values.append(piecewise_linear(i*interval + 1, t_values, temps_low))
 
-def P_4(t, data):
-    func = 0.0
-    for i in range(4):
-        coefficient = 1
-        for j in range(4):
-            if j != i:
-                coefficient *= (t - days[j]) / (days[i] - days[j])
-        func += data[i] * coefficient
-    return func
 
 
+
+
+X = np.column_stack([t_values**0, t_values**1, t_values**2, t_values**3, t_values**4])
+X = np.zeros((high_values.size, 4))
+
+#establish the matrix
+for i in range(X.shape[0]):
+    for j in range(X.shape[1]):
+        X[i,j] += t_values[i] ** j
+# Each row becomes [1, t, t^2, t^3]
+
+coeffs_high = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_high)
+coeffs_average = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_average)
+coeffs_low = np.matmul(np.matmul(np.linalg.inv(np.matmul(X.transpose(), X)), X.transpose()), temps_low)
+
+def P_4_fit(t, coeffs):
+    return coeffs[0] + coeffs[1]*t + coeffs[2]*(t**2) + coeffs[3]*(t**3) + coeffs[4]*(t**4)
 print("Part 3:")
+print("High value Feb 19: " + str(P_4_fit(50, coeffs_high)))
+print("Average value Feb 19: " + str(P_4_fit(50, coeffs_average)))
+print("Low value Feb 19: " + str(P_4_fit(50, coeffs_low)))
 
-print("High value Feb 19: " + str(P_4(50, temps_high)))
-print("Average value Feb 19: " + str(P_4(50,temps_average)))
-print("Low value Feb 19: " + str(P_4(50,temps_low)))
+print("High value July 4: " + str(P_4_fit(190, coeffs_high)))
+print("Average value July 4: " + str(P_4_fit(190, coeffs_average)))
+print("Low value July 4: " + str(P_4_fit(190, coeffs_low)))
 
-print("High value July 4: " + str(P_4(190,temps_high)))
-print("Average value July 4: " + str(P_4(190,temps_average)))
-print("Low value July 4: " + str(P_4(190,temps_low)))
-
-print("High value Dec 25: " + str(P_4(366,temps_high)))
-print("Average value Dec 25: " + str(P_4(366,temps_average)))
-print("Low value Dec 25: " + str(P_4(366,temps_low)))
+print("High value Dec 25: " + str(P_4_fit(366, coeffs_high)))
+print("Average value Dec 25: " + str(P_4_fit(366, coeffs_average)))
+print("Low value Dec 25: " + str(P_4_fit(366, coeffs_low)))
