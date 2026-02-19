@@ -35,7 +35,7 @@ def piecewise_linear(t, t_data, y_data):
         
     #  linear interpolation formula from notes
     return y0 + (t - t0) * (y1 - y0) / (t1 - t0)
-
+print("Part 1:")
 print("High value Feb 19: " + str(piecewise_linear(50, t_values, temps_high)))
 print("Average value Feb 19: " + str(piecewise_linear(50, t_values, temps_average)))
 print("Low value Feb 19: " + str(piecewise_linear(50, t_values, temps_low)))
@@ -76,6 +76,7 @@ def P_9(t, data):
                 coefficient *= (t - days[j]) / (days[i] - days[j])
         func += data[i] * coefficient
     return func
+print("Part 2:")
 
 print("High value Feb 19: " + str(P_9(50, high_values)))
 print("Average value Feb 19: " + str(P_9(50, average_values)))
@@ -115,6 +116,7 @@ def P_4(t, data):
     return func
 
 
+print("Part 3:")
 
 print("High value Feb 19: " + str(P_4(50, temps_high)))
 print("Average value Feb 19: " + str(P_4(50,temps_average)))
